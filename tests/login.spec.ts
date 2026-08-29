@@ -5,8 +5,8 @@ test('Verify login with valid credentials', async ({ page }) => {
   await page.goto('/auth/login');
 
   // Fill in credentials
-  await page.getByPlaceholder('Email').fill('customer@practicesoftwaretesting.com');
-  await page.getByPlaceholder('Password').fill('welcome01');
+  await page.getByPlaceholder('Your email').fill('customer@practicesoftwaretesting.com');
+  await page.getByPlaceholder('Your password').fill('welcome01');
 
   // Click the login button
   await page.getByRole('button', { name: 'Login' }).click();
