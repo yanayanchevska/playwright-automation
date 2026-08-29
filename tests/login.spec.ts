@@ -1,22 +1,15 @@
 import { test, expect } from '@playwright/test';
+import { AccountPage } from '../pages/AccountPage';
+
+test.use({ storageState: 'auth/session.json' });
 
 test('Verify login with valid credentials', async ({ page }) => {
-  // Open URL
-  await page.goto('/auth/login');
+  const accountPage = new AccountPage(page);
 
-  // Fill in credentials
-  await page.getByPlaceholder('Your email').fill('customer@practicesoftwaretesting.com');
-  await page.getByPlaceholder('Your password').fill('welcome01');
+  await page.goto('/account');
 
-  // Click the login button
-  await page.getByRole('button', { name: 'Login' }).click();
-
-  // Verify URL is "https://practicesoftwaretesting.com/account"
   await expect(page).toHaveURL('/account');
-
-  // Verify the page title is "My account"
-  await expect(page.locator('[data-test="page-title"]')).toHaveText('My account');
-
-  // Verify username "Jane Doe" appears in the navigation bar
-  await expect(page.getByText('Jane Doe')).toBeVisible();
+  await expect(accountPage.pageTitle).toHaveText('My account');
+  await expect(accountPage.username).toBeVisible();
+  await expect(accountPage.username).toHaveText('Jane Doe');
 });
