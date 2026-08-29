@@ -6,6 +6,7 @@ export class ProductPage {
   readonly productPrice;
   readonly addToCartButton;
   readonly addToFavoritesButton;
+  readonly quantityInput;
 
   constructor(page: Page) {
     this.page = page;
@@ -13,5 +14,7 @@ export class ProductPage {
     this.productPrice = page.locator('[data-test="unit-price"]');
     this.addToCartButton = page.getByRole('button', { name: 'Add to cart' });
     this.addToFavoritesButton = page.getByRole('button', { name: 'Add to favourites' });
+    this.quantityInput = page.getByLabel('Quantity');
+  
   }
 }
