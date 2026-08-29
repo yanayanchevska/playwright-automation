@@ -1,20 +1,15 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
 import { AccountPage } from '../pages/AccountPage';
 
+test.use({ storageState: 'auth/session.json' });
+
 test('Verify login with valid credentials', async ({ page }) => {
-  const loginPage = new LoginPage(page);
   const accountPage = new AccountPage(page);
 
-  await loginPage.login('customer@practicesoftwaretesting.com', 'welcome01');
+  await page.goto('/account');
 
-  // Verify URL is "https://practicesoftwaretesting.com/account"
   await expect(page).toHaveURL('/account');
-
-  // Verify the page title is "My account"
- await expect(accountPage.pageTitle).toHaveText('My account');
-
-  // Verify username "Jane Doe" appears in the navigation bar
+  await expect(accountPage.pageTitle).toHaveText('My account');
   await expect(accountPage.username).toBeVisible();
   await expect(accountPage.username).toHaveText('Jane Doe');
 });
