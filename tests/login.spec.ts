@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('Verify login with valid credentials', async ({ page }) => {
   // Open URL
-  await page.goto('https://practicesoftwaretesting.com/auth/login');
+  await page.goto('/auth/login');
 
   // Fill in credentials
   await page.getByPlaceholder('Email').fill('customer@practicesoftwaretesting.com');
@@ -12,7 +12,7 @@ test('Verify login with valid credentials', async ({ page }) => {
   await page.getByRole('button', { name: 'Login' }).click();
 
   // Verify URL is "https://practicesoftwaretesting.com/account"
-  await expect(page).toHaveURL('https://practicesoftwaretesting.com/account');
+  await expect(page).toHaveURL('/account');
 
   // Verify the page title is "My account"
   await expect(page.locator('[data-test="page-title"]')).toHaveText('My account');
