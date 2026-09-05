@@ -8,7 +8,8 @@ export class HomePage {
   }
 
   async goto() {
-    await this.page.goto('/');}
+    await this.page.goto('/');
+ }
 
   async clickProduct(productName: string) {
     await this.page.getByRole('link', { name: productName }).click();
