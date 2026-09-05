@@ -15,6 +15,6 @@ test('Verify login with valid credentials', async ({ page }) => {
  await expect(accountPage.pageTitle).toHaveText('My account');
 
   // Verify username "Jane Doe" appears in the navigation bar
-  await expect(accountPage.username).toBeVisible();
-  await expect(accountPage.username).toHaveText('Jane Doe');
+ await expect(accountPage.header.username).toBeVisible();
+ await expect(accountPage.header.username).toHaveText('Jane Doe');
 });

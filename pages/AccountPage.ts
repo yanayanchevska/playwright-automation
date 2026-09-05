@@ -1,16 +1,18 @@
 import { Page } from '@playwright/test';
+import { HeaderFragment } from './HeaderFragment';
 
 export class AccountPage {
   private page: Page;
+  readonly header: HeaderFragment;
   readonly pageTitle;
-  readonly username;
   
     constructor(page: Page) {
+    this.header = new HeaderFragment(page);
     this.page = page;
-    this.pageTitle = page.locator('[data-test="page-title"]');
-    this.username = page.getByText('Jane Doe');
+    this.pageTitle = page.getByTestId('page-title');
   }
     async getUsername() {
-    return await this.username.textContent();
+    return await this.header.username.textContent();
+
   }
 }
