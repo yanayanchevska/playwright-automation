@@ -12,7 +12,7 @@ test('Verify product details', async ({ page }) => {
     await expect(page).toHaveURL(/product/);
 
     // Verify the product title is "Combination Pliers"
-    await expect(productPage.productTitle).toHaveText('Combination Pliers');
+    await expect(productPage.productTitle).toHaveText(productName);
     // Verify the product price is "$19.99"
     await expect(productPage.productPrice).toHaveText('14.15');
     // Verify the "add to cart" button is visible

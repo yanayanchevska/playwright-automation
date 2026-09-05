@@ -6,13 +6,13 @@ export class AccountPage {
   readonly header: HeaderFragment;
   readonly pageTitle;
   
-    constructor(page: Page) {
+  constructor(page: Page) {
     this.header = new HeaderFragment(page);
     this.page = page;
     this.pageTitle = page.getByTestId('page-title');
   }
-    async getUsername() {
+  
+  async getUsername() {
     return await this.header.username.textContent();
-
   }
 }
