@@ -8,7 +8,7 @@ export class AccountPage {
     constructor(page: Page) {
     this.page = page;
     this.pageTitle = page.locator('[data-test="page-title"]');
-    this.username = page.getByText('Jane Doe');
+    this.username = page.getByText('[data-test="nav-menu"]');
   }
     async getUsername() {
     return await this.username.textContent();
