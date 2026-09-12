@@ -9,9 +9,18 @@ export class HomePage {
 
   async goto() {
     await this.page.goto('/');
- }
+  }
 
   async clickProduct(productName: string) {
     await this.page.getByRole('link', { name: productName }).click();
+  }
+
+  async sortProductsBy(option: string) {
+    await this.page.getByTestId('sort').selectOption(option);
+  }
+
+  async getProductNames(): Promise<string[]> {
+    // eslint-disable-next-line playwright/prefer-web-first-assertions -- need actual array to sort and compare
+    return await this.page.getByTestId('product-name').allTextContents();
   }
 }

@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { HomePage } from '../pages/HomePage';
 
 test.use({ storageState: 'auth/session.json' });
 
@@ -6,12 +7,12 @@ const sortOptions = ['Name (A - Z)', 'Name (Z - A)'];
 
 for (const option of sortOptions) {
   test(`Verify sorting by ${option}`, async ({ page }) => {
-    await page.goto('/');
-    await page.locator('[data-test="sort"]').selectOption(option);
+    const homePage = new HomePage(page);
+    await homePage.goto();
+    await homePage.sortProductsBy(option);
 
     await expect(async () => {
-     // eslint-disable-next-line playwright/prefer-web-first-assertions -- need actual array to sort and compare
-      const names = await page.locator('[data-test="product-name"]').allTextContents();
+      const names = await homePage.getProductNames();
       let expected = [...names].sort();
 
       if (option === 'Name (Z - A)') {

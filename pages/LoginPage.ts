@@ -9,9 +9,9 @@ export class LoginPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.emailInput = page.getByPlaceholder('Your email');
-    this.passwordInput = page.getByPlaceholder('Your password');
-    this.loginButton = page.getByRole('button', { name: 'Login' });
+    this.emailInput = page.getByTestId('email-input');
+    this.passwordInput = page.getByTestId('password-input');
+    this.loginButton = page.getByTestId('login-button');
   }
   
   async login(email: string, password: string) {
