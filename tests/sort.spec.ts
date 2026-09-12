@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { HomePage } from '../pages/HomePage';
 
-test.use({ storageState: 'auth/session.json' });
+//test.use({ storageState: 'auth/session.json' });
 
 const sortOptions = ['Name (A - Z)', 'Name (Z - A)'];
 

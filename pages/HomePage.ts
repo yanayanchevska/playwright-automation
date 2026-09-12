@@ -20,7 +20,6 @@ export class HomePage {
   }
 
   async getProductNames(): Promise<string[]> {
-    // eslint-disable-next-line playwright/prefer-web-first-assertions -- need actual array to sort and compare
     return await this.page.getByTestId('product-name').allTextContents();
   }
 }
