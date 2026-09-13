@@ -5,9 +5,9 @@ export class HeaderFragment {
   readonly username;
   readonly cartIcon;
 
-    constructor(page: Page) {
+  constructor(page: Page) {
     this.page = page;
-    this.username = page.locator('[data-test="nav-menu"]');
-    this.cartIcon = page.locator('[data-test="nav-cart"]')
+    this.username = page.getByTestId('nav-menu');
+    this.cartIcon = page.getByTestId('nav-cart');
   }
 }

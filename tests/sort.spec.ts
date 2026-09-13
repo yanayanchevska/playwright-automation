@@ -1,24 +1,23 @@
 import { test, expect } from '@playwright/test';
+import { HomePage } from '../pages/HomePage';
 
-test.use({ storageState: 'auth/session.json' });
+const sortOptions = ['Name (A - Z)', 'Name (Z - A)'];
 
-test('Verify user can sort products by name A-Z', async ({ page }) => {
-  await page.goto('/');
-  await page.locator('[data-test="sort"]').selectOption('Name (A - Z)');
+for (const option of sortOptions) {
+  test(`Verify sorting by ${option}`, async ({ page }) => {
+    const homePage = new HomePage(page);
+    await homePage.goto();
+    await homePage.sortProductsBy(option);
 
-  await expect(async () => {
-    const names = await page.locator('[data-test="product-name"]').allTextContents();
-    expect(names).toEqual([...names].sort());
-  }).toPass();
+    await expect(async () => {
+      const names = await homePage.getProductNames();
+      let expected = [...names].sort();
 
-});
+      if (option === 'Name (Z - A)') {
+        expected = expected.reverse();
+      }
 
-test('Verify user can sort products by name Z-A', async ({ page }) => {
-  await page.goto('/');
-  await page.locator('[data-test="sort"]').selectOption('Name (Z - A)');
-
-  await expect(async () => {
-    const names = await page.locator('[data-test="product-name"]').allTextContents();
-    expect(names).toEqual([...names].sort().reverse());
-  }).toPass();
-});
+      expect(names).toEqual(expected);
+    }).toPass();
+  });
+}
