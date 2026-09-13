@@ -22,4 +22,13 @@ export class HomePage {
   async getProductNames(): Promise<string[]> {
     return await this.page.getByTestId('product-name').allTextContents();
   }
+
+  async getProductPrices(): Promise<number[]> {
+  const priceTexts = await this.page.getByTestId('product-price').allTextContents();
+  return priceTexts.map(price => parseFloat(price.replace('$', '')));
+}
+
+  async filterByCategory(category: string) {
+  await this.page.getByLabel(category).check();
+}
 }

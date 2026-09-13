@@ -6,11 +6,13 @@ export class ProductPage {
   readonly productPrice;
   readonly addToCartButton;
   readonly addToFavoritesButton;
+  readonly quantityInput;
 
   constructor(page: Page) {
     this.page = page;
     this.productTitle = page.locator('h1');
     this.addToFavoritesButton = page.getByRole('button', { name: 'Add to favourites' });
+    this.quantityInput = page.getByLabel('Quantity');
     this.productPrice = page.getByTestId('unit-price');
     this.addToCartButton = page.getByRole('button', { name: 'Add to cart' });
   }
