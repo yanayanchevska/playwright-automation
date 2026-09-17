@@ -1,19 +1,14 @@
-import { test, expect } from '@playwright/test';
-import { HomePage } from '../pages/HomePage';
-import { ProductPage } from '../pages/ProductPage';
+import { test, expect } from '../fixtures';
 
-test('Verify product details', async ({ page }) => {
-  const homePage = new HomePage(page);
-  const productPage = new ProductPage(page);
+test('Verify product details', async ({ page, app }) => {
   const productName = 'Combination Pliers';
 
-  await homePage.goto();
-  await homePage.clickProduct(productName);
+  await app.homePage.goto();
+  await app.homePage.clickProduct(productName);
   await expect(page).toHaveURL(/product/);
 
-  await expect(productPage.productTitle).toHaveText(productName);
-  await expect(productPage.productPrice).toHaveText('14.15');
-  await expect(productPage.addToCartButton).toBeVisible();
-  await expect(productPage.addToFavoritesButton).toBeVisible();
+  await expect(app.productPage.productTitle).toHaveText(productName);
+  await expect(app.productPage.productPrice).toHaveText('14.15');
+  await expect(app.productPage.addToCartButton).toBeVisible();
+  await expect(app.productPage.addToFavoritesButton).toBeVisible();
 });
-    

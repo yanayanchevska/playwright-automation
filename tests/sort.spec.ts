@@ -1,16 +1,14 @@
-import { test, expect } from '@playwright/test';
-import { HomePage } from '../pages/HomePage';
+import { test, expect } from '../fixtures';
 
 const sortOptions = ['Name (A - Z)', 'Name (Z - A)'];
 
 for (const option of sortOptions) {
-  test(`Verify sorting by ${option}`, async ({ page }) => {
-    const homePage = new HomePage(page);
-    await homePage.goto();
-    await homePage.sortProductsBy(option);
+  test(`Verify sorting by ${option}`, async ({ app, page }) => {
+    await app.homePage.goto();
+    await app.homePage.sortProductsBy(option);
 
     await expect(async () => {
-      const names = await homePage.getProductNames();
+      const names = await app.homePage.getProductNames();
       let expected = [...names].sort();
 
       if (option === 'Name (Z - A)') {
@@ -25,13 +23,12 @@ for (const option of sortOptions) {
 const priceSortOptions = ['Price (High - Low)', 'Price (Low - High)'];
 
 for (const option of priceSortOptions) {
-  test(`Verify sorting by ${option}`, async ({ page }) => {
-    const homePage = new HomePage(page);
-    await homePage.goto();
-    await homePage.sortProductsBy(option);
+  test(`Verify sorting by ${option}`, async ({ app, page }) => {
+    await app.homePage.goto();
+    await app.homePage.sortProductsBy(option);
 
     await expect(async () => {
-      const prices = await homePage.getProductPrices();
+      const prices = await app.homePage.getProductPrices();
       let expected = [...prices].sort((a, b) => b - a);
 
       if (option === 'Price (Low - High)') {

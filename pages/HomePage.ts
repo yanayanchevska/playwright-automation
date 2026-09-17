@@ -31,4 +31,15 @@ export class HomePage {
   async filterByCategory(category: string) {
   await this.page.getByLabel(category).check();
 }
+
+async getFirstProductInfo() {
+  const name = await this.page.getByTestId('product-name').first().textContent();
+  const price = await this.page.getByTestId('product-price').first().textContent();
+  return { name, price };
+}
+
+async clickFirstProduct() {
+  await this.page.getByTestId('product-name').first().click();
+}
+
 }
