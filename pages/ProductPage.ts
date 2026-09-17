@@ -16,4 +16,9 @@ export class ProductPage {
     this.productPrice = page.getByTestId('unit-price');
     this.addToCartButton = page.getByRole('button', { name: 'Add to cart' });
   }
+
+  async clickAddToCartButton() {
+    await this.addToCartButton.click();
+  }
+
 }
