@@ -12,10 +12,22 @@ export const test = base.extend<MyFixtures>({
     await use(app);
   },
 
-  loggedInApp: async ({ app }, use) => {
-    await app.loginPage.login('customer@practicesoftwaretesting.com', 'welcome01');
-    await use(app);
-  },
+loggedInApp: async ({ page, request }, use) => {
+  const response = await request.post('https://api.practicesoftwaretesting.com/users/login', {
+    data: { email: 'customer2@practicesoftwaretesting.com', password: 'welcome01' },
+  });
+  const body = await response.json();
+  const token = body.access_token;
+
+  await page.addInitScript((token) => {
+    window.localStorage.setItem('auth-token', token);
+  }, token);
+
+  await page.goto('/');
+
+  const app = new App(page);
+  await use(app);
+},
 });
 
 export { expect } from '@playwright/test';
