@@ -27,6 +27,7 @@ export const test = base.extend<MyFixtures>({
   }, token);
 
   await page.goto('/');
+  await page.waitForSelector('[data-test="product-name"]', { timeout: 15000 });
 
   const app = new App(page);
   await use(app);
