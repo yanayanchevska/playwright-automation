@@ -12,27 +12,27 @@ export const test = base.extend<MyFixtures>({
     await use(app);
   },
 
-loggedInApp: async ({ page, request }, use) => {
-  const response = await request.post('https://api.practicesoftwaretesting.com/users/login', {
-    data: { 
-      email: process.env.USER_EMAIL, 
-      password: process.env.USER_PASSWORD 
-    },
-  });
-  const body = await response.json();
-  const token = body.access_token;
+  loggedInApp: async ({ page, request }, use) => {
+    const response = await request.post('https://api.practicesoftwaretesting.com/users/login', {
+      data: { 
+        email: process.env.USER_EMAIL, 
+        password: process.env.USER_PASSWORD 
+      },
+    });
+    const body = await response.json();
+    console.log('CI AUTH RESPONSE:', body);
+    const token = body.access_token;
 
-  await page.addInitScript((token) => {
-    window.localStorage.setItem('auth-token', token);
-  }, token);
+    await page.addInitScript((token) => {
+      window.localStorage.setItem('auth-token', token);
+    }, token);
 
-  await page.goto('/');
-  await page.waitForLoadState('networkidle');
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
 
-  const app = new App(page);
-  await use(app);
-},
+    const app = new App(page);
+    await use(app);
+  },
 });
-
 
 export { expect } from '@playwright/test';
