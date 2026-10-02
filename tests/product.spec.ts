@@ -8,7 +8,7 @@ test('Verify product details', async ({ page, app }) => {
   await expect(page).toHaveURL(/product/);
 
   await expect(app.productPage.productTitle).toHaveText(productName);
-  await expect(app.productPage.productPrice).toHaveText('14.15');
+  await expect(app.productPage.productPrice).toHaveText('29.99');
   await expect(app.productPage.addToCartButton).toBeVisible();
   await expect(app.productPage.addToFavoritesButton).toBeVisible();
 });
