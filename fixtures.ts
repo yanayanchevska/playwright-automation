@@ -27,6 +27,7 @@ loggedInApp: async ({ page, request }, use) => {
   }, token);
 
   await page.goto('/');
+  await page.waitForLoadState('networkidle');
 
   const app = new App(page);
   await use(app);
