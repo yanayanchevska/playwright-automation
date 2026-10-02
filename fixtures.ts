@@ -12,9 +12,12 @@ export const test = base.extend<MyFixtures>({
     await use(app);
   },
 
-loggedInApp: async ({ page, request }, use) => {
+  loggedInApp: async ({ page, request }, use) => {
   const response = await request.post('https://api.practicesoftwaretesting.com/users/login', {
-    data: { email: 'customer2@practicesoftwaretesting.com', password: 'welcome01' },
+    data: { 
+      email: process.env.USER_EMAIL, 
+      password: process.env.USER_PASSWORD 
+    },
   });
   const body = await response.json();
   const token = body.access_token;
@@ -24,6 +27,7 @@ loggedInApp: async ({ page, request }, use) => {
   }, token);
 
   await page.goto('/');
+  await page.waitForSelector('[data-test="product-name"]', { timeout: 15000 });
 
   const app = new App(page);
   await use(app);

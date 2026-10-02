@@ -1,5 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
-
+import dotenv from 'dotenv';
+dotenv.config();
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -22,31 +23,34 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [
+  ['html'],
+  ['dot'],
+  ['json', { outputFile: 'test-results/results.json' }],
+],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: 'https://practicesoftwaretesting.com',
-    testIdAttribute: 'data-test',
-
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
-  },
+  baseURL: process.env.BASE_URL,
+  testIdAttribute: 'data-test',
+  trace: 'on-first-retry',
+  screenshot: 'only-on-failure',
+  video: 'on-first-retry',
+},
 
   /* Configure projects for major browsers */
   projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+  {
+    name: 'chromium',
+    use: { ...devices['Desktop Chrome'] },
+  },
+  {
+    name: 'firefox',
+    use: { ...devices['Desktop Firefox'] },
+  },
+  // {
+  //   name: 'webkit',
+  //   use: { ...devices['Desktop Safari'] },
+  // },
 ],
 
   /* Run your local dev server before starting the tests */
